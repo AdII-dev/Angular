@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="CharacterApp">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    
+    <title>Angular</title>
+<style>
+    body{
+        padding: 20px;
+    }
+    #tehat{
+        display: none;
+    }
+</style>
+</head>
+<body>
+    <div ng-controller="CharacterController">
+        <h1>{{text}}</h1>
+        <!--Kereső mező -->
+        <input type="text" ng-model="search" placeholder="Dolgozó keresése">
+
+
+        <ul>
+            <li ng-repeat="character in characters | filter:search">
+                <b>{{character.name}}</b> munkája: {{character.job}}
+            </li>
+        </ul>
+    <hr>
+        <h2>Új dolgozó hozzáadása</h2>
+        <form ng-submit="addCharacter()">
+            <input type="text" placeholder="Név" ng-model="newCharacter.name">
+            <input type="text" placeholder="Munkakör" ng-model="newCharacter.job">
+            <button type="submit">Hozzáadás a listához</button>
+            
+        </form>
+
+    </div>
+
+<script>
+    let app = angular.module("CharacterApp", []);
+    app.controller("CharacterController", function($scope){
+        $scope.characters =[
+            {name: 'Vizi Adrián', job:'Webprogramer'},
+            {name: 'Marcalek Máté', job:'Sufi'},
+            {name: 'Kozma Levente', job:'programer'}
+        ];
+
+        $scope.text = "Karakterek listája";
+        
+        $scope.newCharacter = {};
+        $scope.addCharacter = function(){
+            $scope.characters.push({
+                name:$scope.newCharacter.name, 
+                job:$scope.newCharacter.job
+            });
+        //Űrlap kiürítése
+        $scope.newCharacter = {};
+        }
+
+    
+    });
+</script>
+</body>
+</html>
